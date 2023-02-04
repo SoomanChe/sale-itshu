@@ -1,10 +1,10 @@
 <script setup lang="ts">
 
-type FormProp = { title: string, content: string, image: FileList | null, targetUrl:string};
+type FormProp = { title: string, content: string, image: FileList | null, link:string};
 const form = reactive<FormProp>({
   title: "",
   content: "",
-  targetUrl: "",
+  link: "",
   image: null
 })
 const previews = ref<string[]>([])
@@ -28,12 +28,11 @@ onBeforeUnmount(() => {
   freeMemoryURL()
 })
 
-const formValid = computed(() => form.title && form.content && form.image?.length)
-
 const submitForm = async () => {
   const formData = new FormData()
   formData.append("title", form.title)
   formData.append("content", form.content)
+  formData.append("link", form.link)
   for (let i = 0; i < form.image!.length; i++) {
     formData.append("images", form.image![i])
   }
@@ -61,7 +60,7 @@ const submitForm = async () => {
       required
     />
     <input
-      v-model="form.targetUrl"
+      v-model="form.link"
       type="url"
       class="text-slate-900 w-full bg-transparent p-2  hover:bg-slate-50"
       placeholder="주소"
