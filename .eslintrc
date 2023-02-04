@@ -7,13 +7,15 @@
   "extends": [
     "@nuxtjs/eslint-config-typescript"
   ],
+  "rules": {
+    "quotes": ["error", "double"]
+  },
   "overrides": [
     {
       "files": [
         "./server/**/*.ts"
       ],
       "rules": {
-        "quotes": ["error", "double"],
         "no-console": [
           "error",
           {

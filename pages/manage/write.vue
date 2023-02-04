@@ -1,9 +1,15 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 
-type FormProp = { title: string, content: string, image: FileList|null };
-const form = reactive<FormProp>({ title: "", content: "", image: null })
+type FormProp = { title: string, content: string, image: FileList | null, targetUrl:string};
+const form = reactive<FormProp>({
+  title: "",
+  content: "",
+  targetUrl: "",
+  image: null
+})
 const previews = ref<string[]>([])
-function onChange (event:InputEvent) {
+
+function onChange (event: InputEvent) {
   const files = (event.target as HTMLInputElement).files!
   if (files.length === 0) {
     return
@@ -33,29 +39,46 @@ const submitForm = async () => {
   }
   return await useFetch("/api/admin/blogs", {
     method: "post",
-    body: formData,
+    body: formData
   })
 }
 </script>
 
 <template>
-  <div class="min-h-content-body space-y-4">
-    <input v-model="form.title" type="text" class="text-3xl text-slate-900 tracking-tight font-godo w-full bg-transparent" placeholder="제목">
-    <client-only>
-      <v-tiptap v-model="form.content" />
-    </client-only>
-    <label class="inline-block">
+  <form class="min-h-content-body space-y-4" @submit.prevent="submitForm">
+    <input
+      v-model="form.title"
+      type="text"
+      class="text-3xl text-slate-900 tracking-tight font-godo w-full bg-transparent p-2 hover:bg-slate-50"
+      placeholder="제목"
+      required
+    >
+    <textarea
+      v-model="form.content"
+      type="text"
+      class="text-slate-900 w-full bg-transparent placeholder:text-base p-2  hover:bg-slate-50"
+      placeholder="본문"
+      required
+    />
+    <input
+      v-model="form.targetUrl"
+      type="url"
+      class="text-slate-900 w-full bg-transparent p-2  hover:bg-slate-50"
+      placeholder="주소"
+      required
+    >
+    <label class="inline-block relative">
       <div class="v-button cursor-pointer">파일 선택</div>
-      <input type="file" multiple hidden @change="onChange">
+      <input type="file" multiple required class="opacity-0 absolute inset-0 -z-10" @change="onChange">
     </label>
-    <div>
-      <img v-for="preview in previews" :key="preview" :src="preview">
+    <div class="flex flex-wrap">
+      <img v-for="preview in previews" :key="preview" :src="preview" class="w-48">
     </div>
 
-    <v-button :disabled="!formValid" type="button" @click="submitForm">
+    <v-button type="submit">
       제출
     </v-button>
-  </div>
+  </form>
 </template>
 
 <style scoped>

@@ -18,8 +18,8 @@ model Post {
   id         String   @id @default(cuid())
   title      String
   content    String
+  targetUrl  String
   images     Image[]
-  published  Boolean  @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
