@@ -13,6 +13,7 @@
         "./server/**/*.ts"
       ],
       "rules": {
+        "quotes": ["error", "double"],
         "no-console": [
           "error",
           {
