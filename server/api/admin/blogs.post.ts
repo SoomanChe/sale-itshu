@@ -3,6 +3,7 @@ import sharp from "sharp"
 import { readFormData } from "~/server/utils/readFormData"
 import { serverSupabaseClient } from "#supabase/server"
 import { useUniqueId } from "@/composables/useUniqueId"
+import { resolveLinkPriceUrl } from "~/server/utils/resolveLinkPriceUrl"
 
 interface Dto {
   title: string,
@@ -36,11 +37,13 @@ export default defineEventHandler(async (event) => {
     })
   })
 
+  const shortLink = await resolveLinkPriceUrl(link)
+
   await event.context.prisma.post.create({
     data: {
       title,
       content,
-      link,
+      link: shortLink,
       images: {
         createMany: {
           data: imageUploadResults.map(r => ({ url: r.data!.path })),

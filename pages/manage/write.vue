@@ -5,7 +5,7 @@ const form = reactive<FormProp>({
   title: "",
   content: "",
   link: "",
-  image: null
+  image: null,
 })
 const previews = ref<string[]>([])
 
@@ -38,7 +38,7 @@ const submitForm = async () => {
   }
   return await useFetch("/api/admin/blogs", {
     method: "post",
-    body: formData
+    body: formData,
   })
 }
 </script>
@@ -48,22 +48,22 @@ const submitForm = async () => {
     <input
       v-model="form.title"
       type="text"
-      class="text-3xl text-slate-900 tracking-tight font-godo w-full bg-transparent p-2 hover:bg-slate-50"
+      class="text-3xl text-slate-900 tracking-tight font-godo w-full bg-transparent p-2 hover:bg-slate-50 focus:outline-blue-400"
       placeholder="제목"
       required
     >
     <textarea
       v-model="form.content"
       type="text"
-      class="text-slate-900 w-full bg-transparent placeholder:text-base p-2  hover:bg-slate-50"
+      class="text-slate-900 w-full bg-transparent placeholder:text-base p-2 hover:bg-slate-50 focus:outline-blue-400"
       placeholder="본문"
       required
     />
     <input
       v-model="form.link"
       type="url"
-      class="text-slate-900 w-full bg-transparent p-2  hover:bg-slate-50"
-      placeholder="주소"
+      class="text-slate-900 w-full bg-transparent p-2 hover:bg-slate-50 focus:outline-blue-400"
+      placeholder="링크"
       required
     >
     <label class="inline-block relative">
