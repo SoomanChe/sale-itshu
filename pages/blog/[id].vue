@@ -20,9 +20,13 @@ const createdAt = useDateFormat(post?.createdAt, "YYYY-MM-DD hh:mm:ss")
           </div>
         </aside>
         <div>
-          <div>
-            <img src="~assets/img/adsense.svg" alt="">
-          </div>
+          <adsbygoogle
+            style="display: block; margin: 3px 0; height: 280px;"
+            ad-client="ca-pub-4350961883979083"
+            data-ad-slot="7126539416"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          />
           <div class="mb-4">
             {{ post?.content }}
           </div>

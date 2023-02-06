@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   typescript: {
-    shim: false
+    shim: false,
   },
   css: ["@/assets/css/main.pcss"],
   components: {
@@ -9,45 +9,49 @@ export default defineNuxtConfig({
       {
         path: "~/components/global",
         global: true,
-        prefix: "v"
+        prefix: "v",
       },
       {
         path: "~/components/atoms",
-        prefix: "v"
+        prefix: "v",
       },
       {
         path: "~/components/molecules",
-        prefix: "v"
+        prefix: "v",
       },
       {
         path: "~/components/organisms",
-        prefix: "v"
+        prefix: "v",
       },
       {
         path: "~/components/layouts",
-        prefix: "v"
+        prefix: "v",
       },
       { path: "~/components/pages" },
       {
         path: "~/components",
-        prefix: "v"
-      }
-    ]
+        prefix: "v",
+      },
+    ],
   },
   modules: [
     "@nuxtjs/tailwindcss",
     "@nuxtjs/supabase",
     "@sidebase/nuxt-auth",
     "nuxt-icon",
-    "@vueuse/nuxt"
+    "@vueuse/nuxt",
+    "@nuxtjs/google-adsense",
   ],
   hooks: {
     "pages:extend" (routes) {
       const blogPage = routes.find(r => r.path === "/blog")?.children?.find(r => r.name === "blog")
       blogPage!.alias = ["/"]
-    }
+    },
   },
   auth: {
-    origin: process.env.AUTH_ORIGIN || "http://localhost:3000"
-  }
+    origin: process.env.AUTH_ORIGIN || "http://localhost:3000",
+  },
+  "google-adsense": {
+    id: "ca-pub-#########",
+  },
 })

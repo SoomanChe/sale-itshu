@@ -34,11 +34,15 @@
           <form class="space-y-8" action="https://pay.digitalinspiration.com/contact" method="POST">
             <label class="block ">
               보내는 분 메일 주소
-              <v-input />
+              <v-input class="mt-2" disabled />
             </label>
             <label class="block">
-              보내는 분 메일 주소
-              <v-input />
+              본문
+              <textarea
+                disabled
+                class="mt-2 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                rows="5"
+              />
             </label>
           </form>
         </div>
