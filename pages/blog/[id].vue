@@ -25,6 +25,9 @@ const { data: post, pending } = await useFetch("/api/blogs/" + useRoute().params
           <div class="mb-4">
             {{ post?.content }}
           </div>
+          <nuxt-link :to="post?.link" class="font-semibold text-blue-400">
+            {{ post?.title }} 바로가기
+          </nuxt-link>
           <img v-for="(img,idx) in post?.images" :key="img" :src="img" :alt="post?.title+idx" class="w-full">
         </div>
       </div>

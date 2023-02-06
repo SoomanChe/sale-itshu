@@ -1,5 +1,15 @@
-import { db } from "~/server/utils/db"
-
 export default defineEventHandler(async (event) => {
-  return db[+event.context.params.id - 1]
+  const { images, ...remain } = await event.context.prisma.post.findFirstOrThrow({
+    where: {
+      id: +event.context.params.id,
+    },
+    include: {
+      images: true,
+    },
+  })
+
+  return {
+    ...remain,
+    images: images.map(img => img.url),
+  }
 })
