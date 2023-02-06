@@ -4,4 +4,5 @@ export interface Post {
   createdAt: string
   images:string[]
   content: string
+  tags: string[]
 }

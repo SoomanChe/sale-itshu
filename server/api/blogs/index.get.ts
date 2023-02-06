@@ -11,10 +11,17 @@ export default defineEventHandler(async (event) => {
     take: 10,
     skip: 10 * (+page - 1),
     orderBy: { created_at: "desc" },
-    include: { images: true },
+    include: {
+      images: true,
+      tags: {
+        select: { tag: true },
+      },
+    },
   })
-  return _result.map(({ images, ...v }) => ({
+
+  return _result.map(({ images, tags, ...v }) => ({
     ...v,
     images: images.map(img => img.url),
+    tags: tags.map(tag => tag.tag.text),
   }))
 })

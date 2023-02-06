@@ -9,9 +9,22 @@ async function main () {
           title: v.title,
           content: v.content,
           link: "http://example.com",
+          tags: {
+            create: v.tags.map(tag => ({
+              tag: {
+                connectOrCreate: {
+                  where: {
+                    text: tag,
+                  },
+                  create: {
+                    text: tag,
+                  },
+                },
+              },
+            })),
+          },
           images: {
             createMany: {
-              // @ts-ignore
               data: v.images.map(r => ({ url: r })),
             },
           },
