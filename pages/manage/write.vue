@@ -1,10 +1,13 @@
 <script setup lang="ts">
 
-type FormProp = { title: string, content: string, image: FileList | null, link:string};
+import TagGroup from "~/components/molecules/TagGroup.vue"
+
+type FormProp = { title: string, content: string, image: FileList | null, link:string, tags:string[]};
 const form = reactive<FormProp>({
   title: "",
   content: "",
   link: "",
+  tags: [],
   image: null,
 })
 const previews = ref<string[]>([])
@@ -41,6 +44,23 @@ const submitForm = async () => {
     body: formData,
   })
 }
+
+function onEnter (e:Event) {
+  const target = e.target as HTMLInputElement
+  const value = target.value
+  const tags = form.tags
+  if (tags.length < 3) {
+    tags.push(value)
+    target.value = ""
+  }
+}
+
+function onDelete (e:Event) {
+  if ((e.target as HTMLInputElement).value.length === 0) {
+    const tags = form.tags
+    tags.splice(tags.length - 1)
+  }
+}
 </script>
 
 <template>
@@ -66,6 +86,16 @@ const submitForm = async () => {
       placeholder="링크"
       required
     >
+    <div class="flex items-center">
+      <tag-group :items="form.tags" />
+      <input
+        type="text"
+        class="text-slate-900 w-full bg-transparent p-2 hover:bg-slate-50 focus:outline-blue-400"
+        placeholder="태그"
+        @keydown.enter.prevent="onEnter"
+        @keydown.delete="onDelete"
+      >
+    </div>
     <label class="inline-block relative">
       <div class="v-button cursor-pointer">파일 선택</div>
       <input type="file" multiple required class="opacity-0 absolute inset-0 -z-10" @change="onChange">

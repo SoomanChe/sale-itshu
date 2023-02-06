@@ -6,6 +6,7 @@ const { data, pending } = await useFetch("/api/blogs", {
   method: "get",
   query: { page },
 })
+
 </script>
 
 <template>
@@ -42,6 +43,10 @@ const { data, pending } = await useFetch("/api/blogs", {
           <v-button>수정</v-button>
         </div>
       </div>
+    </div>
+
+    <div class="flex justify-center mt-5 mb-10">
+      <v-pagination />
     </div>
   </div>
 </template>

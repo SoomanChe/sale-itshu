@@ -3,7 +3,7 @@ import { Post } from "~/types"
 
 const page = ref(1)
 const posts = ref<Post[]>([])
-const { data, pending, execute } = await useFetch("/api/blogs", {
+const { data, pending, execute } = await useFetch<Post[]>("/api/blogs", {
   method: "get",
   query: { page },
 })
@@ -22,7 +22,6 @@ watchEffect(() => {
   }
 })
 
-await useFetch("/api/test")
 </script>
 
 <template>

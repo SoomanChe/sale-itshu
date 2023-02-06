@@ -1,4 +1,4 @@
-import { paginate } from "~/server/api/blogs/db"
+import { paginate } from "~/server/utils/db"
 
 export default defineEventHandler(async (event) => {
   const { page } = await getQuery(event)
