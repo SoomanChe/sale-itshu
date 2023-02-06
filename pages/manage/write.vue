@@ -36,6 +36,9 @@ const submitForm = async () => {
   formData.append("title", form.title)
   formData.append("content", form.content)
   formData.append("link", form.link)
+  for (let i = 0; i < form.tags!.length; i++) {
+    formData.append("tags", form.tags[i])
+  }
   for (let i = 0; i < form.image!.length; i++) {
     formData.append("images", form.image![i])
   }

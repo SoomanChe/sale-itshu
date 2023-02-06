@@ -10,6 +10,7 @@ interface Dto {
   content: string,
   link: string
   images: File[]
+  tags:string[]
 }
 
 export default defineEventHandler(async (event) => {
@@ -18,35 +19,51 @@ export default defineEventHandler(async (event) => {
     content,
     link,
     images,
+    tags,
   } = await readFormData<Dto>(event, { multiples: true })
-  const buffers = await Promise.all(images.map(img =>
-    sharp(img.toJSON().filepath)
-      .resize({ width: 800 })
-      .webp({ quality: 80 })
-      .toBuffer(),
-  ))
-
-  const imageUploadResults = await Promise.all(buffers.map(buffer =>
-    serverSupabaseClient(event).storage.from("sale-itshu-static").upload(`images/${useUniqueId()}.webp`, buffer, {
-      cacheControl: "31536000", // 1 year
-    }),
-  )).catch((e) => {
-    throw createError({
-      statusCode: 500,
-      statusMessage: e,
-    })
-  })
-
-  const shortLink = await resolveLinkPriceUrl(link)
+  // const buffers = await Promise.all(images.map(img =>
+  //   sharp(img.toJSON().filepath)
+  //     .resize({ width: 800 })
+  //     .webp({ quality: 80 })
+  //     .toBuffer(),
+  // ))
+  //
+  // const imageUploadResults = await Promise.all(buffers.map(buffer =>
+  //   serverSupabaseClient(event).storage.from("sale-itshu-static").upload(`images/${useUniqueId()}.webp`, buffer, {
+  //     cacheControl: "31536000", // 1 year
+  //   }),
+  // )).catch((e) => {
+  //   throw createError({
+  //     statusCode: 500,
+  //     statusMessage: e,
+  //   })
+  // })
+  //
+  // const shortLink = await resolveLinkPriceUrl(link)
 
   await event.context.prisma.post.create({
     data: {
       title,
       content,
-      link: shortLink,
+      link: "shortLink",
+      tags: {
+        create: tags.map(tag => ({
+          tag: {
+            connectOrCreate: {
+              where: {
+                text: tag,
+              },
+              create: {
+                text: tag,
+              },
+            },
+          },
+        })),
+      },
       images: {
         createMany: {
-          data: imageUploadResults.map(r => ({ url: r.data!.path })),
+          // data: imageUploadResults.map(r => ({ url: r.data!.path })),
+          data: [{ url: "1" }, { url: "2" }],
         },
       },
     },
