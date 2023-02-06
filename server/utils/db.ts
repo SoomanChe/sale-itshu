@@ -22,3 +22,15 @@ export const db = Array.from({ length: 50 }).map<Post>((_, i) => ({
     "잡화", "W컨셉", "신세계몰",
   ],
 }))
+// event.context.prisma.post.create({
+//   data: {
+//     title
+//     content,
+//     link: shortLink,
+//     images: {
+//       createMany: {
+//         data: imageUploadResults.map(r => ({ url: r.data!.path })),
+//       },
+//     },
+//   },
+// })
