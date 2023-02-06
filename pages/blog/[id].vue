@@ -1,13 +1,14 @@
 <script setup lang='ts'>
 
-const { data: post, pending } = await useFetch("/api/blogs/" + useRoute().params.id, {
+const { data: post } = await useFetch("/api/blogs/" + useRoute().params.id, {
   method: "get",
 })
 
+const createdAt = useDateFormat(post?.createdAt, "YYYY-MM-DD hh:mm:ss")
 </script>
 
 <template>
-  <v-section :title="post?.title" :meta="post?.createdAt">
+  <v-section :title="post?.title" :meta="createdAt">
     <div class="mx-auto xl:px-12 pb-12">
       <div class="max-w-3xl pt-10 mx-auto xl:grid xl:max-w-none xl:grid-cols-[1fr_50rem] xl:gap-x-8">
         <aside>

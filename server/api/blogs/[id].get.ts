@@ -1,5 +1,12 @@
+import dayjs from "dayjs"
+
 export default defineEventHandler(async (event) => {
-  const { images, ...remain } = await event.context.prisma.post.findFirstOrThrow({
+  const {
+    images,
+    created_at: createdAt,
+    updated_at: updatedAt,
+    ...remain
+  } = await event.context.prisma.post.findFirstOrThrow({
     where: {
       id: +event.context.params.id,
     },
@@ -10,6 +17,8 @@ export default defineEventHandler(async (event) => {
 
   return {
     ...remain,
+    createdAt: dayjs(createdAt),
+    updatedAt,
     images: images.map(img => img.url),
   }
 })
