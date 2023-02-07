@@ -52,6 +52,6 @@ export default defineNuxtConfig({
     origin: process.env.AUTH_ORIGIN || "http://localhost:3000",
   },
   "google-adsense": {
-    id: "ca-pub-#########",
+    id: "ca-pub-4350961883979083",
   },
 })
