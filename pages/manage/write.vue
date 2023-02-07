@@ -1,7 +1,4 @@
 <script setup lang="ts">
-
-import TagGroup from "~/components/molecules/TagGroup.vue"
-
 type FormProp = { title: string, content: string, image: FileList | null, link:string, tags:string[]};
 const form = reactive<FormProp>({
   title: "",
@@ -31,7 +28,9 @@ onBeforeUnmount(() => {
   freeMemoryURL()
 })
 
+const loading = ref(false)
 const submitForm = async () => {
+  loading.value = true
   const formData = new FormData()
   formData.append("title", form.title)
   formData.append("content", form.content)
@@ -42,10 +41,14 @@ const submitForm = async () => {
   for (let i = 0; i < form.image!.length; i++) {
     formData.append("images", form.image![i])
   }
-  return await useFetch("/api/admin/blogs", {
+  await useFetch("/api/admin/blogs", {
     method: "post",
     body: formData,
+  }).catch((e) => {
+    throw createError({ statusCode: 500, statusMessage: e })
   })
+  loading.value = false
+  useRouter().push({ path: "/manage" })
 }
 
 function onEnter (e:Event) {
@@ -90,7 +93,7 @@ function onDelete (e:Event) {
       required
     >
     <div class="flex items-center">
-      <tag-group :items="form.tags" />
+      <v-tag-group :items="form.tags" />
       <input
         type="text"
         class="text-slate-900 flex-1 bg-transparent p-2 hover:bg-slate-50 focus:outline-blue-400"
@@ -107,7 +110,7 @@ function onDelete (e:Event) {
       <img v-for="preview in previews" :key="preview" :src="preview" class="w-48">
     </div>
 
-    <v-button type="submit" :disabled="form.tags.length < 3" class="disabled:bg-gray-200 disabled:text-black/30">
+    <v-button type="submit" :disabled="form.tags.length < 3 || loading" class="disabled:bg-gray-200 disabled:text-black/30">
       제출
     </v-button>
   </form>

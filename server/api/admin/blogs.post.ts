@@ -12,7 +12,7 @@ interface Dto {
   images: File[]
   tags:string[]
 }
-
+const imagePrefix = "https://wbwsloxpaolxwerwiupa.supabase.co/storage/v1/object/public/sale-itshu-static/"
 export default defineEventHandler(async (event) => {
   const {
     title,
@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
     data: {
       title,
       content,
-      link: "shortLink",
+      link: shortLink,
       tags: {
         create: tags.map(tag => ({
           tag: {
@@ -63,7 +63,7 @@ export default defineEventHandler(async (event) => {
       },
       images: {
         createMany: {
-          data: imageUploadResults.map(r => ({ url: r.data!.path })),
+          data: imageUploadResults.map(r => ({ url: imagePrefix + r.data!.path })),
         },
       },
     },
