@@ -1,3 +1,5 @@
+import { imagePrefix } from "~/constants"
+
 export default defineEventHandler(async (event) => {
   const { page } = await getQuery(event)
   if (Array.isArray(page) || !page) {
@@ -21,7 +23,7 @@ export default defineEventHandler(async (event) => {
 
   return _result.map(({ images, tags, ...v }) => ({
     ...v,
-    images: images.map(img => img.url),
+    images: images.map(img => imagePrefix + img.url),
     tags: tags.map(tag => tag.tag.text),
   }))
 })

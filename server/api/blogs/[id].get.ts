@@ -1,6 +1,11 @@
 import dayjs from "dayjs"
+import { imagePrefix } from "~/constants"
 
 export default defineEventHandler(async (event) => {
+  const id = Number(event.context.params?.id)
+  if (isNaN(id)) {
+    throw createError({ statusCode: 400, statusMessage: "올바르지 않은, id값 입니다." })
+  }
   const {
     images,
     created_at: createdAt,
@@ -8,7 +13,7 @@ export default defineEventHandler(async (event) => {
     ...remain
   } = await event.context.prisma.post.findFirstOrThrow({
     where: {
-      id: +event.context.params.id,
+      id,
     },
     include: {
       images: true,
@@ -19,6 +24,6 @@ export default defineEventHandler(async (event) => {
     ...remain,
     createdAt: dayjs(createdAt),
     updatedAt,
-    images: images.map(img => img.url),
+    images: images.map(img => imagePrefix + img.url),
   }
 })
