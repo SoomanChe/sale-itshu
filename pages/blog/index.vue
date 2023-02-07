@@ -28,13 +28,15 @@ watchEffect(() => {
   <v-section title="고민은 배송만 늦출뿐 🤔" description="세일 정보를 모아보기 위해 작성하는 블로그입니다.">
     <div class="max-w-7xl mx-auto">
       <div class="mx-auto my-4 max-w-5xl">
-        <adsbygoogle
-          style="display: block; margin: 3px 0; height: 280px;"
-          ad-client="ca-pub-4350961883979083"
-          data-ad-slot="7126539416"
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        />
+        <client-only>
+          <adsbygoogle
+            style="display: block; margin: 3px 0; height: 280px;"
+            ad-client="ca-pub-4350961883979083"
+            data-ad-slot="7126539416"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          />
+        </client-only>
       </div>
       <div class="grid gap-8 md:grid-cols-2">
         <blog-card v-for="post in posts" :key="post.id" :post="post" class="pt-8 border-t" />
