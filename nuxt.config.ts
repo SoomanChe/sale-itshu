@@ -77,6 +77,7 @@ function configUtil (baseUrl:string) {
   const imageUrl = baseUrl + "/logo.webp"
   const description = "오늘 사는게 제일 싸다! 싸게 살 수 있는 세일 정보를 모아봅니다."
   return {
+    title,
     meta: [
       { charset: "utf-8" },
       {

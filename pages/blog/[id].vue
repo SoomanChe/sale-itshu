@@ -1,10 +1,15 @@
 <script setup lang='ts'>
+import { Post } from "~/types"
 
-const { data: post } = await useFetch("/api/blogs/" + useRoute().params.id, {
+const { data: post } = await useFetch<Post>("/api/blogs/" + useRoute().params.id, {
   method: "get",
 })
 
 const createdAt = useDateFormat(post?.createdAt, "YYYY-MM-DD hh:mm:ss")
+
+useHead({
+  title: post.value?.title,
+})
 </script>
 
 <template>
