@@ -21,25 +21,26 @@ export default defineEventHandler(async (event) => {
     images,
     tags,
   } = await readFormData<Dto>(event, { multiples: true })
-  // const buffers = await Promise.all(images.map(img =>
-  //   sharp(img.toJSON().filepath)
-  //     .resize({ width: 800 })
-  //     .webp({ quality: 80 })
-  //     .toBuffer(),
-  // ))
-  //
-  // const imageUploadResults = await Promise.all(buffers.map(buffer =>
-  //   serverSupabaseClient(event).storage.from("sale-itshu-static").upload(`images/${useUniqueId()}.webp`, buffer, {
-  //     cacheControl: "31536000", // 1 year
-  //   }),
-  // )).catch((e) => {
-  //   throw createError({
-  //     statusCode: 500,
-  //     statusMessage: e,
-  //   })
-  // })
-  //
-  // const shortLink = await resolveLinkPriceUrl(link)
+  const _images = Array.isArray(images) ? images : [images]
+  const buffers = await Promise.all(_images.map(img =>
+    sharp(img.toJSON().filepath)
+      .resize({ width: 800 })
+      .webp({ quality: 80 })
+      .toBuffer(),
+  ))
+
+  const imageUploadResults = await Promise.all(buffers.map(buffer =>
+    serverSupabaseClient(event).storage.from("sale-itshu-static").upload(`images/${useUniqueId()}.webp`, buffer, {
+      cacheControl: "31536000", // 1 year
+    }),
+  )).catch((e) => {
+    throw createError({
+      statusCode: 500,
+      statusMessage: e,
+    })
+  })
+
+  const shortLink = await resolveLinkPriceUrl(link)
 
   await event.context.prisma.post.create({
     data: {
@@ -62,8 +63,7 @@ export default defineEventHandler(async (event) => {
       },
       images: {
         createMany: {
-          // data: imageUploadResults.map(r => ({ url: r.data!.path })),
-          data: [{ url: "1" }, { url: "2" }],
+          data: imageUploadResults.map(r => ({ url: r.data!.path })),
         },
       },
     },

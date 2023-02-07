@@ -93,7 +93,7 @@ function onDelete (e:Event) {
       <tag-group :items="form.tags" />
       <input
         type="text"
-        class="text-slate-900 w-full bg-transparent p-2 hover:bg-slate-50 focus:outline-blue-400"
+        class="text-slate-900 flex-1 bg-transparent p-2 hover:bg-slate-50 focus:outline-blue-400"
         placeholder="태그"
         @keydown.enter.prevent="onEnter"
         @keydown.delete="onDelete"
@@ -107,7 +107,7 @@ function onDelete (e:Event) {
       <img v-for="preview in previews" :key="preview" :src="preview" class="w-48">
     </div>
 
-    <v-button type="submit">
+    <v-button type="submit" :disabled="form.tags.length < 3" class="disabled:bg-gray-200 disabled:text-black/30">
       제출
     </v-button>
   </form>
