@@ -58,4 +58,9 @@ export default defineNuxtConfig({
     server: true,
     client: true,
   },
+  vite: {
+    resolve: {
+      dedupe: ["vue-router"],
+    },
+  },
 })
