@@ -47,6 +47,6 @@
     "vue": "^3.2.45"
   },
   "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "seed": "ts-node -P tsconfig-prisma.json prisma/seed.ts"
   }
 }

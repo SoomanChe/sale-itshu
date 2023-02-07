@@ -54,4 +54,8 @@ export default defineNuxtConfig({
   "google-adsense": {
     id: "ca-pub-4350961883979083",
   },
+  sourcemap: {
+    server: true,
+    client: true,
+  },
 })

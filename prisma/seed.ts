@@ -1,6 +1,8 @@
+import * as Prisma from "@prisma/client"
 import { db } from "../server/utils/db"
-import { PrismaClient } from "./.client"
+const { PrismaClient } = Prisma
 const prisma = new PrismaClient()
+
 async function main () {
   const result = await Promise.all(
     db.map(v =>
