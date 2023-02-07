@@ -35,7 +35,7 @@ useHead({
           <div class="mb-4">
             {{ post?.content }}
           </div>
-          <nuxt-link :to="post?.link" class="font-semibold text-blue-400">
+          <nuxt-link :to="post?.link" class="font-semibold text-blue-400 mb-6 inline-block w-full text-center">
             {{ post?.title }} 바로가기
           </nuxt-link>
           <img v-for="(img,idx) in post?.images" :key="img" :src="img" :alt="post?.title+idx" class="w-full">
