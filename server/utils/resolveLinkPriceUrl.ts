@@ -23,23 +23,21 @@ export async function resolveLinkPriceUrl (targetUrl: string) {
   if (deepLinkResult.statusCode === 500) {
     return deepLinkResult.link
   }
-
-  const shortLink = await getShortLink(deepLinkResult.link)
-  console.log("shortLink", shortLink)
-  return shortLink
+  return getShortLink(deepLinkResult.link)
 }
 
 async function getDeepLink (targetUrl: string) {
   const url = new URL(baseUrl)
   url.searchParams.append("type", "deeplink_submit")
   url.searchParams.append("affiliate_id", "A100682417")
-  url.searchParams.append("url", encodeURIComponent(targetUrl))
+  url.searchParams.append("url", targetUrl)
 
-  const _result = await $fetch<string>(url.toString() + "&", {
+  const _result = await $fetch<string>(url + "&", {
     method: "post",
   })
 
   const result: SuccessResponse | ErrorResponse = JSON.parse(_result)
+
   if (isErrorResponse(result)) {
     return {
       link: targetUrl,
@@ -53,10 +51,10 @@ async function getDeepLink (targetUrl: string) {
   deepLink.searchParams.append("l", "9999")
   deepLink.searchParams.append("l_cd1", "3")
   deepLink.searchParams.append("l_cd2", "0")
-  deepLink.searchParams.append("tu", encodeURIComponent(targetUrl))
+  deepLink.searchParams.append("tu", targetUrl)
 
   return {
-    link: encodeURIComponent(deepLink.toString()),
+    link: deepLink.toString(),
     statusCode: 200,
   }
 }
