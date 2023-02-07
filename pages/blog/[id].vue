@@ -63,13 +63,14 @@ useHead({
           </div>
         </aside>
         <div>
-          <adsbygoogle
-            style="display: block; margin: 3px 0; height: 280px;"
-            ad-client="ca-pub-4350961883979083"
-            data-ad-slot="7126539416"
-            data-ad-format="auto"
-            data-full-width-responsive="true"
-          />
+          <!--          <adsbygoogle-->
+          <!--            style="display: block; margin: 3px 0; height: 280px;"-->
+          <!--            ad-client="ca-pub-4350961883979083"-->
+          <!--            data-ad-slot="7126539416"-->
+          <!--            data-ad-format="auto"-->
+          <!--            data-full-width-responsive="true"-->
+          <!--          />-->
+          <img src="~assets/img/adsense.svg" alt="adsense placeholder" class="h-72 my-6">
           <div class="mb-4 space-y-2">
             <p>오늘 사는게 가장 싸다! <icon name="twemoji:money-mouth-face" style="vertical-align: text-top" /> 오늘도 할인정보를 수집하고 있는 Haronz 입니다.</p>
             <p>{{ post?.content }}</p>
