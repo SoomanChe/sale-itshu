@@ -31,16 +31,16 @@ const submitForm = async () => {
   for (let i = 0; i < form.image!.length; i++) {
     formData.append("images", form.image![i])
   }
-  await useFetch("/api/admin/blogs", {
-    method: "post",
-    body: formData,
-  }).catch((e) => {
-    throw createError({
-      statusCode: 500,
-      statusMessage: e,
+  try {
+    await useFetch("/api/admin/blogs", {
+      method: "post",
+      body: formData,
     })
-  })
-  loading.value = false
+  } catch (e) {
+    alert(e)
+  } finally {
+    loading.value = false
+  }
   useRouter().push({ path: "/manage" })
 }
 
@@ -68,7 +68,6 @@ function onRemoveImage (index: number) {
 onMounted(() => {
   useEventListener(document, "paste", (e: ClipboardEvent) => {
     const blob = e.clipboardData?.files[0]
-    console.log(blob)
     if (!blob || !blob.type.includes("image/")) {
       return
     }
@@ -124,7 +123,7 @@ onMounted(() => {
 
     <v-button
       type="submit"
-      :disabled="form.tags.length < 3 || loading"
+      :disabled="form.tags.length < 3 || form.image.length===0 || loading"
       class="disabled:bg-gray-200 disabled:text-black/30"
     >
       제출
