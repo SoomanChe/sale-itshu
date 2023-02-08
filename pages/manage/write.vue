@@ -111,7 +111,7 @@ onMounted(() => {
     </div>
     <label class="inline-block relative">
       <div class="v-button cursor-pointer">파일 선택</div>
-      <input type="file" multiple required class="opacity-0 absolute inset-0 -z-10" @change="onChange">
+      <input type="file" multiple class="opacity-0 absolute inset-0 -z-10" @change="onChange">
     </label>
     <div>
       <draggable v-model="form.image" class="flex flex-wrap space-x-4" :item-key="(v)=>v">
