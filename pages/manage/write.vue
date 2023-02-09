@@ -106,6 +106,7 @@ onMounted(() => {
         class="text-slate-900 flex-1 bg-transparent p-2 hover:bg-slate-50 focus:outline-blue-400"
         placeholder="태그"
         @keydown.enter.prevent="onTagInputEnter"
+        @keydown.,="onTagInputEnter"
         @keydown.delete="onTagInputDelete"
       >
     </div>
