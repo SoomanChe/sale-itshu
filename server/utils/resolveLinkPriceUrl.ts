@@ -29,7 +29,7 @@ export async function resolveLinkPriceUrl (targetUrl: string) {
 async function getDeepLink (targetUrl: string) {
   const url = new URL(baseUrl)
   url.searchParams.append("type", "deeplink_submit")
-  url.searchParams.append("affiliate_id", "A100682417")
+  url.searchParams.append("affiliate_id", "A100683015")
   url.searchParams.append("url", targetUrl)
 
   const _result = await $fetch<string>(url + "&", {
@@ -47,7 +47,7 @@ async function getDeepLink (targetUrl: string) {
 
   const deepLink = new URL("https://click.linkprice.com/click.php")
   deepLink.searchParams.append("m", result.merchant_id)
-  deepLink.searchParams.append("a", "A100682417")
+  deepLink.searchParams.append("a", "A100683015")
   deepLink.searchParams.append("l", "9999")
   deepLink.searchParams.append("l_cd1", "3")
   deepLink.searchParams.append("l_cd2", "0")
